@@ -40,3 +40,24 @@ export async function createNewEvent(eventData) {
   const { event } = await response.json();
   return event;
 }
+
+
+//fetch images from backend
+export async function fetchSelectableImage({ signal }) {
+  const response = await fetch("http://localhost:3000/events/images", {
+    signal,
+  });
+
+  if (!response.ok) {
+    const error = new Error("An error occured while fetching the images");
+    console.log(response.status);
+    error.code = response.status;
+    console.log(error.info);
+    console.log(error.message);
+    error.info = error.message;
+    throw error;
+  }
+  const { images } = await response.json();
+
+  return images;
+}
