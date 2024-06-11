@@ -5,20 +5,22 @@ import EventItem from "./EventItem.jsx";
 import { fetchEvents } from "../../util/http.js";
 
 export default function NewEventsSection() {
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ["events"],
     queryFn: fetchEvents,
-   
   });
   let content;
 
-  if (isLoading) {
+  if (isPending) {
     content = <LoadingIndicator />;
   }
 
   if (isError) {
     content = (
-      <ErrorBlock title="An error occurred" message="Failed to fetch events" />
+      <ErrorBlock
+        title="An error occurred"
+        message={error.info?.message || "Failed to fetch events."}
+      />
     );
   }
 
