@@ -1,6 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient();
+
 export async function fetchEvents({ signal, searchTerm }) {
   console.log(searchTerm);
   console.log(signal);
@@ -60,6 +61,7 @@ export async function fetchSelectableImage({ signal }) {
   return images;
 }
 
+//
 export async function fetchEvent({ id, signal }) {
   const response = await fetch(`http://localhost:3000/events/${id}`, {
     signal,
@@ -67,27 +69,45 @@ export async function fetchEvent({ id, signal }) {
 
   if (!response.ok) {
     const error = new Error("An error occured while fetching the event");
-    error.code = reponse.status;
-    error.info = await reponse.json();
+    error.code = response.status;
+    error.info = await response.json();
     throw error;
   }
 
-  const { events } = await response.json();
-  return events;
+  const { event } = await response.json();
+  return event;
 }
 
 //delet events from detailsEvents components
 
 export async function deleteEvents({ id }) {
-  const reponse = await fetch(`http://localhost:3000/events/${id}`, {
+  const response = await fetch(`http://localhost:3000/events/${id}`, {
     method: "DELETE",
   });
 
-  if (!reponse.ok) {
+  if (!response.ok) {
     const error = new Error("An error occured while deleteing the email");
-    error.code = reponse.status;
-    error.info = await respones.json();
+    error.code = response.status;
+    error.info = await response.json();
     throw error;
   }
-  return reponse.json()
+  return response.json();
+}
+
+export async function updateEvent({ id, event }) {
+  const response = await fetch(`http://localhost:3000/events/${id}`, {
+    method: "PUT",
+    body: JSON.stringify({ event }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    const error = new Error("An error occured while updating event");
+    error.code = response.status;
+    error.info = await response.json();
+    throw error;
+  }
+  return response.json();
 }

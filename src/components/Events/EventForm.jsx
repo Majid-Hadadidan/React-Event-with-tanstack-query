@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchSelectableImage } from "../../util/http.js";
 import ErrorBlock from "../UI/ErrorBlock.jsx";
 
-export default function EventForm({ inputData, onSubmit, children }) {
+export default function   EventForm({ inputData, onSubmit, children }) {
   const [selectedImage, setSelectedImage] = useState(inputData?.image);
 
   const { data, isPending, isError } = useQuery({

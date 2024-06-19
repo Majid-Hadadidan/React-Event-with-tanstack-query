@@ -13,7 +13,7 @@ export default function NewEvent() {
     mutationFn: createNewEvent,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["events"] });
-      navigate("/events{}Y");
+      navigate("/events");
     },
   });
   function handleSubmit(formData) {
